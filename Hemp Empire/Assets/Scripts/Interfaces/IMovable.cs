@@ -1,4 +1,7 @@
-public interface IMovable
+namespace Character
 {
-    public void Move();
+    public interface IMovable
+    {
+        public void Move();
+    }
 }

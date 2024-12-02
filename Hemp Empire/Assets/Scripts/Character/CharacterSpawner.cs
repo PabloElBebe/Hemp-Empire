@@ -17,7 +17,8 @@ namespace Character
         private void Spawn(GameObject character)
         {
             GameObject spawned = Instantiate(character, Vector2.zero, Quaternion.identity);
-            spawned.GetComponent<BasicCharacter>().Initialize(4);
+            spawned.GetComponent<BasicCharacter>().Initialize(2);
+            SpawnCharacter?.Invoke(spawned);
         }
     }
 }

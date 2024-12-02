@@ -5,12 +5,12 @@ namespace Character
 {
     public class MovementController : MonoBehaviour
     {
-        private List<IMovable> _characters;
-
+        private List<IMovable> _characters = new List<IMovable>();
+        private float _timer;
+        
         private void Awake()
         {
             CharacterSpawner.SpawnCharacter += AddCharacter;
-            CharacterDestroyer.DestroyCharacter += RemoveCharacter;
         }
         
         private void AddCharacter(GameObject character)
@@ -25,9 +25,21 @@ namespace Character
 
         private void Update()
         {
-            foreach (IMovable character in _characters)
+            if (_characters.Count <= 0)
+                return;
+
+            if (_timer <= 0)
             {
-                character.Move();
+                _timer = 0.1f;
+                
+                foreach (IMovable character in _characters)
+                {
+                    character.Move();
+                }
+            }
+            else
+            {
+                _timer -= Time.deltaTime;
             }
         }
     }
