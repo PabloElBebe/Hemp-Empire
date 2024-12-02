@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Character
 {
     public class MovementController : MonoBehaviour
     {
-        private List<IMovable> _characters = new List<IMovable>();
+        /*private List<GameObject> _characters = new List<GameObject>();
         private float _timer;
         
         private void Awake()
@@ -13,28 +14,22 @@ namespace Character
             CharacterSpawner.SpawnCharacter += AddCharacter;
         }
         
-        private void AddCharacter(GameObject character)
-        {
-            _characters.Add(character.GetComponent<IMovable>());
-        }
-
-        private void RemoveCharacter(GameObject character)
-        {
-            _characters.Remove(character.GetComponent<IMovable>());
-        }
-
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.F))
+                foreach (GameObject character in _characters.Where(character => character.GetComponent<Character>().isSelected))
+                    character.GetComponent<Character>().SetTargetPosition(MouseUtils.MousePositionToWorld());
+            
             if (_characters.Count <= 0)
                 return;
 
             if (_timer <= 0)
             {
-                _timer = 0.1f;
+                _timer = 0.075f;
                 
-                foreach (IMovable character in _characters)
+                foreach (GameObject character in _characters)
                 {
-                    character.Move();
+                    character.GetComponent<IMovable>().Move();
                 }
             }
             else
@@ -42,5 +37,15 @@ namespace Character
                 _timer -= Time.deltaTime;
             }
         }
+        
+        private void AddCharacter(GameObject character)
+        {
+            _characters.Add(character);
+        }
+
+        private void RemoveCharacter(GameObject character)
+        {
+            _characters.Remove(character);
+        }*/
     }
 }
