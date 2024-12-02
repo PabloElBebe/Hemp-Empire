@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Character
 {
+    [RequireComponent(typeof(PathFinder))]
     public class BasicCharacter : Character, IMovable
     {
         [SerializeField] private Color _selectColor;
@@ -11,6 +12,8 @@ namespace Character
         private Vector3 _targetPosition;
 
         private float _timer;
+        private List<Vector3Int> CurrentPath = new List<Vector3Int>();
+        private int _moveProgress;
 
         private void Start()
         {
@@ -19,8 +22,12 @@ namespace Character
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F) && isSelected)
-                _targetPosition = MouseUtils.MousePositionToWorld();
+            if (isSelected && Input.GetKeyDown(KeyCode.F))
+            {
+                CurrentPath = GetComponent<PathFinder>()
+                    .FindPath(Vector3Int.RoundToInt(transform.position), Vector3Int.RoundToInt(MouseUtils.MousePositionToWorld()));
+                _moveProgress = 0;
+            }
 
             if (_timer <= 0)
             {
@@ -58,20 +65,29 @@ namespace Character
 
         public void Move()
         {
-            if (!CheckForObjects(transform.position))
-                Debug.Log("Z");
-
-            if (!(Vector3.Distance(transform.position, _targetPosition) > 1f))
+            if (CurrentPath.Count <= 0)
+                return;
+            if (_moveProgress >= CurrentPath.Count)
                 return;
 
-            Vector3 normalizedPos = (_targetPosition - transform.position).normalized;
-            Vector3Int currentPos = new Vector3Int((int)Mathf.Round(normalizedPos.x), (int)Mathf.Round(normalizedPos.y));
+            transform.position = CurrentPath[_moveProgress];
+            _moveProgress++;
+        }
 
-            if (!CheckForObjects(transform.position + currentPos))
-                return;
+        private Vector3Int GetNeighbor(Vector3 position)
+        {
+            Vector3Int neighbor = Vector3Int.zero;
 
-            transform.position += currentPos;
+            if (!CheckForObjects(position + Vector3Int.up))
+                neighbor = Vector3Int.up;
+            else if (!CheckForObjects(position + Vector3Int.right))
+                neighbor = Vector3Int.right;
+            else if (!CheckForObjects(position + Vector3Int.down))
+                neighbor = Vector3Int.down;
+            else if (!CheckForObjects(position + Vector3Int.left))
+                neighbor = Vector3Int.left;
 
+            return neighbor;
         }
 
         private bool CheckForObjects(Vector3 center)

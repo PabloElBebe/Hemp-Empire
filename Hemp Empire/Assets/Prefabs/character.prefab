@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2668514370311903893}
   - component: {fileID: 4115438776096968450}
   - component: {fileID: 5689023449538371606}
+  - component: {fileID: 7794492995639542921}
   - component: {fileID: 7244030299765213942}
   - component: {fileID: -8020542826336703881}
   m_Layer: 0
@@ -100,6 +101,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _selectColor: {r: 0.5338644, g: 0.8773585, b: 0.8627417, a: 1}
+--- !u!114 &7794492995639542921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871648116050164846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76eee1a0f12d4020b8cd640f6d22548c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _selectTile1: {fileID: 11400000, guid: 0d21a58a88861e743b9d9e13cff7d679, type: 2}
+  _selectTile2: {fileID: 11400000, guid: ead16f00a73a1474e8a6901dff405c56, type: 2}
 --- !u!58 &7244030299765213942
 CircleCollider2D:
   m_ObjectHideFlags: 0
