@@ -6,8 +6,6 @@ using UnityEngine.Tilemaps;
 
 public class PathFinder : MonoBehaviour
 {
-    [SerializeField] private Tile _selectTile1;
-    [SerializeField] private Tile _selectTile2;
     private Tilemap _walkableTilemap;
     private List<Vector3Int> Path = new List<Vector3Int>();
 

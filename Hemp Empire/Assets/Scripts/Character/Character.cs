@@ -15,7 +15,5 @@ namespace Character
         public abstract void Select();
 
         public abstract void Deselect();
-        
-        public abstract void SetTargetPosition(Vector3 position);
     }
 }

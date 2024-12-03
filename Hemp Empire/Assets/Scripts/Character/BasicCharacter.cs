@@ -5,45 +5,22 @@ using UnityEngine;
 namespace Character
 {
     [RequireComponent(typeof(PathFinder))]
-    public class BasicCharacter : Character, IMovable
+    [RequireComponent(typeof(BasicCharacterMovement))]
+    public class BasicCharacter : Character
     {
         [SerializeField] private Color _selectColor;
-        private float _moveSpeed;
-        private Vector3 _targetPosition;
-
-        private float _timer;
-        private List<Vector3Int> CurrentPath = new List<Vector3Int>();
-        private int _moveProgress;
-
-        private void Start()
-        {
-            _targetPosition = transform.position;
-        }
 
         private void Update()
         {
-            if (isSelected && Input.GetKeyDown(KeyCode.F))
+            if (isSelected && Input.GetKey(KeyCode.LeftControl) && Input.GetMouseButtonDown(1))
             {
-                CurrentPath = GetComponent<PathFinder>()
-                    .FindPath(Vector3Int.RoundToInt(transform.position), Vector3Int.RoundToInt(MouseUtils.MousePositionToWorld()));
-                _moveProgress = 0;
-            }
-
-            if (_timer <= 0)
-            {
-                _timer = 0.075f;
-
-                Move();
-            }
-            else
-            {
-                _timer -= Time.deltaTime;
+                GetComponent<BasicCharacterMovement>().StartMovement();;
             }
         }
 
         public void Initialize(float moveSpeed)
         {
-            _moveSpeed = moveSpeed;
+            GetComponent<BasicCharacterMovement>().SetSpeed(moveSpeed);
         }
 
         public override void Select()
@@ -56,38 +33,6 @@ namespace Character
         {
             GetComponent<SpriteRenderer>().color = Color.white;
             isSelected = false;
-        }
-
-        public override void SetTargetPosition(Vector3 position)
-        {
-            _targetPosition = position;
-        }
-
-        public void Move()
-        {
-            if (CurrentPath.Count <= 0)
-                return;
-            if (_moveProgress >= CurrentPath.Count)
-                return;
-
-            transform.position = CurrentPath[_moveProgress];
-            _moveProgress++;
-        }
-
-        private Vector3Int GetNeighbor(Vector3 position)
-        {
-            Vector3Int neighbor = Vector3Int.zero;
-
-            if (!CheckForObjects(position + Vector3Int.up))
-                neighbor = Vector3Int.up;
-            else if (!CheckForObjects(position + Vector3Int.right))
-                neighbor = Vector3Int.right;
-            else if (!CheckForObjects(position + Vector3Int.down))
-                neighbor = Vector3Int.down;
-            else if (!CheckForObjects(position + Vector3Int.left))
-                neighbor = Vector3Int.left;
-
-            return neighbor;
         }
 
         private bool CheckForObjects(Vector3 center)

@@ -13,12 +13,23 @@ public class SelectSystem : MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1)) DeselectAll?.Invoke();
-        
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(1) && !Input.GetKey(KeyCode.LeftControl)) DeselectAll?.Invoke();
+
+        if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl))
         {
             if (Input.GetMouseButtonDown(0))
             {
+                _startPosition = MouseUtils.MousePositionToWorld();
+                _selectBox = Instantiate(_selectBoxPrefab, _startPosition, Quaternion.identity);
+            }
+
+            Selecting();
+        }
+        else if (Input.GetMouseButton(0) && !Input.GetKey(KeyCode.LeftControl))
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                DeselectAll?.Invoke();
                 _startPosition = MouseUtils.MousePositionToWorld();
                 _selectBox = Instantiate(_selectBoxPrefab, _startPosition, Quaternion.identity);
             }
@@ -41,6 +52,8 @@ public class SelectSystem : MonoBehaviour
     {
         Vector3 endPosition = MouseUtils.MousePositionToWorld();
         
+        if (_selectBox == null)
+            return;
         _selectBox.transform.localScale = endPosition - _startPosition;
         _selectBox.transform.position = (endPosition - _startPosition) / 2 + _startPosition;
     }

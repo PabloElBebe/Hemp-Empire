@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4115438776096968450}
   - component: {fileID: 5689023449538371606}
   - component: {fileID: 7794492995639542921}
+  - component: {fileID: 6439891180554793023}
   - component: {fileID: 7244030299765213942}
   - component: {fileID: -8020542826336703881}
   m_Layer: 0
@@ -113,8 +114,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76eee1a0f12d4020b8cd640f6d22548c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectTile1: {fileID: 11400000, guid: 0d21a58a88861e743b9d9e13cff7d679, type: 2}
-  _selectTile2: {fileID: 11400000, guid: ead16f00a73a1474e8a6901dff405c56, type: 2}
+  _selectTile1: {fileID: 11400000, guid: 66fe4d8cfbf3e8e45a37881d2a153cba, type: 2}
+  _selectTile2: {fileID: 11400000, guid: d02a08cb4143ae84ca453fdfbbcdd639, type: 2}
+--- !u!114 &6439891180554793023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871648116050164846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4ead6323bad4fefb6fbacfbe0969490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!58 &7244030299765213942
 CircleCollider2D:
   m_ObjectHideFlags: 0
