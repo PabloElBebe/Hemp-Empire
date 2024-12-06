@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Character
 {
@@ -10,6 +12,11 @@ namespace Character
         private float _timer;
         private List<Vector3Int> CurrentPath = new List<Vector3Int>();
         private int _moveProgress;
+
+        private void Start()
+        {
+            StartMovement();
+        }
 
         private void Update()
         {
@@ -27,8 +34,10 @@ namespace Character
 
         public void StartMovement()
         {
+            /*CurrentPath = GetComponent<PathFinder>()
+                .FindPath(Vector3Int.RoundToInt(transform.position), Vector3Int.RoundToInt(MouseUtils.MousePositionToWorld()));*/
             CurrentPath = GetComponent<PathFinder>()
-                .FindPath(Vector3Int.RoundToInt(transform.position), Vector3Int.RoundToInt(MouseUtils.MousePositionToWorld()));
+                .FindPath(Vector3Int.RoundToInt(transform.position), new Vector3Int(Random.Range(-25, 26), Random.Range(-15, 16)));
             _moveProgress = 0;
         }
 
@@ -41,11 +50,15 @@ namespace Character
         {
             if (CurrentPath.Count <= 0)
                 return;
-            if (_moveProgress >= CurrentPath.Count)
-                return;
-
-            transform.position = CurrentPath[_moveProgress];
-            _moveProgress++;
+            if (_moveProgress < CurrentPath.Count)
+            {
+                transform.position = CurrentPath[_moveProgress];
+                _moveProgress++;
+            }
+            else
+            {
+                StartMovement();
+            }
         }
     }
 }

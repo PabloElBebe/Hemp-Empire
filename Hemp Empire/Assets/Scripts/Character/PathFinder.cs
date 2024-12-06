@@ -17,6 +17,9 @@ public class PathFinder : MonoBehaviour
     public List<Vector3Int> FindPath(Vector3Int startPosition, Vector3Int targetPosition)
     {
         List<Vector3Int> currentPath = new List<Vector3Int>();
+        
+        if (_walkableTilemap.GetTile(targetPosition) == null || !CheckForObjects(targetPosition))
+            return currentPath;
 
         List<Node> checkedPositions = new List<Node>();
         List<Node> notCheckedPositions = new List<Node>();
